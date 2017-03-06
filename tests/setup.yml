@@ -1,0 +1,10 @@
+---
+# Sets up a new Python Monolith instance.
+# This playbook won't be used within BAS as alternative server provisioning is used by ICT.
+
+- hosts: all
+  become: true
+  tasks:
+    - include: ../tasks/main.yml
+  handlers:
+    - include: ../handlers/main.yml

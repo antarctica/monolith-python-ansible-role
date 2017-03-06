@@ -1,0 +1,17 @@
+galaxy_info:
+  author: Felix Fennell 
+  description: System setup for a Python Monolith instance
+  company: British Antarctic Survey
+
+  license: MIT
+
+  min_ansible_version: 2.1
+
+  platforms:
+  - name: EL
+    versions:
+    - 7
+
+  galaxy_tags: []
+
+dependencies: []

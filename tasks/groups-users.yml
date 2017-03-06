@@ -1,0 +1,10 @@
+---
+
+- name: create deployers group
+  group: name=deployers
+
+- name: create deployment user
+  user: name=webapps-deploy comment="BAS Web Applications Deployment Identity" groups="deployers"
+
+- name: set authorized keys for deployment user
+  authorized_key: user=webapps-deploy key=https://packages.data.bas.ac.uk/keys/public-keys/bas-webapps-deployment-identity/bas-webapps-deployment-identity.pub state=present

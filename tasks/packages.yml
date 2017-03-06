@@ -1,0 +1,31 @@
+---
+
+- set_fact:
+    distribution_abbrev: "{{ (ansible_distribution == 'CentOS') | ternary('centos', 'rhel') }}"
+
+# Must be state: present due to deficiency in ansible. See:
+# https://github.com/ansible/ansible-modules-core/issues/948 
+- name: install IUS repository
+  yum: name="https://{{ distribution_abbrev }}{{ ansible_distribution_major_version }}.iuscommunity.org/ius-release.rpm" state=present
+
+- name: install Nginx repository
+  yum: name="http://nginx.org/packages/{{ distribution_abbrev }}/{{ ansible_distribution_major_version }}/noarch/RPMS/nginx-release-{{ distribution_abbrev }}-{{ ansible_distribution_major_version }}-0.el7.ngx.noarch.rpm"
+
+- name: upgrade all packages
+  yum: name=* state=latest update_cache=yes
+
+- name: install required packages
+  yum: name="{{ item }}" state=present
+  with_items:
+    - "@development"
+    - openssl-devel
+    - python36u
+    - python36u-devel
+    - python36u-pip
+    - python-virtualenv
+    - uwsgi-plugin-python36u
+    - nginx
+
+# The CentOS package for virtualenv is too old to work with Python 3
+- name: install virtualenv as a pip dependency
+  pip: name=virtualenv executable=pip3.6

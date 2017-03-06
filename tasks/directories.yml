@@ -1,0 +1,10 @@
+---
+
+- name: create application and virtual environment parent directories
+  file: path="{{ item }}" state=directory owner=webapps-deploy mode=0755
+  with_items:
+    - /usr/src/app
+    - /usr/src/venv
+    - /var/log/app
+    - /var/run/app
+ 
