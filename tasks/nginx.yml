@@ -5,3 +5,6 @@
 
 - name: allow deployers to write nginx site configurations
   file: path="/etc/nginx/conf.d/" state=directory group=deployers mode="0775"
+
+- name: copy sudoers file for webapps-deploy user to manage application service
+  copy: src=files/etc/sudoers.d/webapps-nginx dest=/etc/sudoers.d/webapps-nginx
